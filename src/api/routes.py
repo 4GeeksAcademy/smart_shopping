@@ -1,3 +1,4 @@
+import os
 import requests
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -565,31 +566,83 @@ def generate_recipe_ingredients():
     if not receta:
         return jsonify({"msg": "Receta requerida"}), 400
 
-    try:
-        api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return jsonify({"error": "GEMINI_API_KEY no configurada"}), 500
 
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={api_key}"
+    prompt = (
+        f"Devuelve SOLO un array JSON válido con los ingredientes principales "
+        f"para preparar: {receta}. "
+        f"Cada elemento debe ser el nombre del ingrediente en singular y minúsculas, "
+        f"sin cantidades ni descripciones. "
+        f'Ejemplo de respuesta válida: ["huevo", "harina", "leche", "sal"]. '
+        f"NO incluyas explicaciones, texto adicional, ni markdown. "
+        f"Devuelve únicamente el array JSON."
+    )
 
-        prompt = f"Dame SOLO ingredientes para {receta}. Solo lista separada por comas."
-
-        payload = {
-            "contents": [
-                {
-                    "parts": [
-                        {"text": prompt}
-                    ]
-                }
-            ]
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "temperature": 0.2
         }
+    }
 
-        response = requests.post(url, json=payload)
-        result = response.json()
+    modelos = [
+        "gemini-2.0-flash",
+        "gemini-flash-latest",
+        "gemini-1.5-flash",
+        "gemini-2.5-flash",
+    ]
 
-        text = result["candidates"][0]["content"]["parts"][0]["text"]
+    last_error = None
 
-        ingredientes = [i.strip() for i in text.split(",")]
+    for modelo in modelos:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={api_key}"
 
-        return jsonify(ingredientes)
+        try:
+            response = requests.post(url, json=payload, timeout=30)
+            print(
+                f"\n=== Modelo: {modelo} | Status: {response.status_code} ===")
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+            if response.status_code != 200:
+                last_error = f"{modelo}: {response.text[:200]}"
+                continue
+
+            result = response.json()
+
+            if "candidates" not in result or not result["candidates"]:
+                last_error = f"{modelo}: sin candidates"
+                continue
+
+            text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+            print("Respuesta cruda:", text[:300])
+
+            text = text.replace("```json", "").replace("```", "").strip()
+
+            import json
+            ingredientes = json.loads(text)
+
+            if not isinstance(ingredientes, list):
+                last_error = f"{modelo}: respuesta no es lista"
+                continue
+
+            ingredientes = [
+                str(i).strip().lower()
+                for i in ingredientes
+                if isinstance(i, (str, int, float)) and str(i).strip()
+            ]
+            ingredientes = list(dict.fromkeys(ingredientes))[:20]
+
+            print(" Ingredientes:", ingredientes)
+            return jsonify(ingredientes)
+
+        except Exception as e:
+            last_error = f"{modelo}: {str(e)}"
+            print(f" Error con {modelo}:", str(e))
+            continue
+
+    return jsonify({
+        "error": "Ningún modelo respondió correctamente",
+        "ultimo_error": last_error
+    }), 500

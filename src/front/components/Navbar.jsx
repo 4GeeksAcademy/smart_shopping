@@ -1,93 +1,261 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 export const Navbar = () => {
-	const navigate = useNavigate();
-	const token = sessionStorage.getItem("token");
-	const role = sessionStorage.getItem("role");
 
-	// 🔥 DATOS DEL USUARIO (con fallback)
-	const userImage = sessionStorage.getItem("image_url") || "https://i.imgur.com/HeIi0wU.png";
-	const userEmail = sessionStorage.getItem("email") || (role === "admin" ? "Admin" : "Usuario");
+    const navigate = useNavigate();
+    const location = useLocation();
 
-	const logout = () => {
-		sessionStorage.clear();
-		navigate("/login");
-	};
+    const [searchTerm, setSearchTerm] = useState("");
 
-	return (
-		<nav className="navbar navbar-light bg-light px-3 d-flex justify-content-between">
+    const token = sessionStorage.getItem("token");
+    const role = sessionStorage.getItem("role");
 
-			{/* IZQUIERDA */}
-			<Link to="/" className="navbar-brand">
-				Smart Shopping
-			</Link>
+    const userImage = sessionStorage.getItem("image_url");
 
-			{/* DERECHA */}
-			<div className="d-flex align-items-center gap-2">
+    const userEmail =
+        sessionStorage.getItem("email") ||
+        (role === "admin" ? "Admin" : "Usuario");
 
-				{/* 🔓 NO LOGUEADO */}
-				{!token && (
-					<>
-						<Link to="/login" className="btn btn-primary">
-							Login
-						</Link>
+    const logout = () => {
+        sessionStorage.clear();
+        navigate("/login");
+    };
 
-						<Link to="/admin-login" className="btn btn-secondary">
-							Admin
-						</Link>
-					</>
-				)}
+    const isActive = (path) => location.pathname === path;
 
-				{/* 👑 ADMIN */}
-				{token && role === "admin" && (
-					<>
-						<Link to="/users" className="btn btn-outline-dark">Usuarios</Link>
-						<Link to="/admins" className="btn btn-outline-dark">Admins</Link>
-						<Link to="/products" className="btn btn-outline-dark">Productos</Link>
-					</>
-				)}
+    const initials = userEmail
+        .split("@")[0]
+        .split(/[._-]/)
+        .map(s => s[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
 
-				{/* 👤 USER */}
-				{token && role === "user" && (
-					<>
-						<Link to="/lists" className="btn btn-outline-dark">
-							Mi lista
-						</Link>
-					</>
-				)}
+    const handleSearch = (e) => {
 
-				{/* 🔥 PERFIL */}
-				{token && (
-					<div className="d-flex align-items-center gap-2 ms-3">
+        e.preventDefault();
 
-						<img
-							src={userImage}
-							alt="perfil"
-							onClick={() => navigate("/profile")}
-							style={{
-								width: "40px",
-								height: "40px",
-								borderRadius: "50%",
-								objectFit: "cover",
-								cursor: "pointer"
-							}}
-						/>
+        // 🔥 SOLO ADMIN PUEDE BUSCAR PRODUCTOS
+        if (role === "admin") {
 
-						<span style={{ fontSize: "14px" }}>
-							{userEmail}
-						</span>
+            navigate("/products");
 
-					</div>
-				)}
+        }
+    };
 
-				{/* 🚪 LOGOUT */}
-				{token && (
-					<button onClick={logout} className="btn btn-danger">
-						Logout
-					</button>
-				)}
+    return (
 
-			</div>
-		</nav>
-	);
+        <nav className="ss-navbar">
+
+            <div className="ss-navbar-inner">
+
+                {/* 🛒 BRAND */}
+                <Link to="/" className="ss-brand">
+
+                    <span className="ss-brand-icon">
+                        <i className="fa-solid fa-basket-shopping"></i>
+                    </span>
+
+                    <span>Smart Shopping</span>
+
+                </Link>
+
+                {/* 🔗 LINKS */}
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px"
+                    }}
+                >
+
+                    <Link
+                        to="/"
+                        className={`ss-nav-text-link ${isActive("/") ? "active" : ""}`}
+                    >
+                        Home
+                    </Link>
+
+                    {/* 👤 USER */}
+                    {token && role === "user" && (
+
+                        <Link
+                            to="/lists"
+                            className={`ss-nav-text-link ${isActive("/lists") ? "active" : ""}`}
+                        >
+                            Mis listas
+                        </Link>
+
+                    )}
+
+                    {/* 👑 ADMIN */}
+                    {token && role === "admin" && (
+
+                        <>
+                            <Link
+                                to="/products"
+                                className={`ss-nav-text-link ${isActive("/products") ? "active" : ""}`}
+                            >
+                                Productos
+                            </Link>
+
+                            <Link
+                                to="/users"
+                                className={`ss-nav-text-link ${isActive("/users") ? "active" : ""}`}
+                            >
+                                Usuarios
+                            </Link>
+
+                            <Link
+                                to="/categories"
+                                className={`ss-nav-text-link ${isActive("/categories") ? "active" : ""}`}
+                            >
+                                Categorías
+                            </Link>
+
+                            <Link
+                                to="/admins"
+                                className={`ss-nav-text-link ${isActive("/admins") ? "active" : ""}`}
+                            >
+                                Admins
+                            </Link>
+                        </>
+
+                    )}
+
+                </div>
+
+                {/* 🔍 BUSCADOR SOLO ADMIN */}
+                {role === "admin" && (
+
+                    <form
+                        className="ss-search-bar"
+                        onSubmit={handleSearch}
+                    >
+
+                        <input
+                            type="text"
+                            className="ss-search-input"
+                            placeholder="Buscar productos..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+
+                        <button
+                            type="submit"
+                            className="ss-search-btn"
+                        >
+
+                            <i
+                                className="fa-solid fa-magnifying-glass"
+                                style={{ marginRight: "6px" }}
+                            ></i>
+
+                            Buscar
+
+                        </button>
+
+                    </form>
+
+                )}
+
+                {/* 👤 DERECHA */}
+                <div className="ss-nav-actions">
+
+                    {/* NO LOGUEADO */}
+                    {!token && (
+
+                        <>
+                            <Link
+                                to="/login"
+                                className="ss-nav-text-link"
+                            >
+                                Iniciar sesión
+                            </Link>
+
+                            <Link
+                                to="/register"
+                                className="ss-btn ss-btn-sm"
+                                style={{
+                                    background: "white",
+                                    color: "var(--ss-green-dark)"
+                                }}
+                            >
+                                Registrarse
+                            </Link>
+                        </>
+
+                    )}
+
+                    {/* LOGUEADO */}
+                    {token && (
+
+                        <>
+
+                            <div
+                                className="ss-nav-greeting"
+                                onClick={() => navigate("/profile")}
+                            >
+
+                                {userImage ? (
+
+                                    <img
+                                        src={userImage}
+                                        alt="perfil"
+                                        className="ss-avatar"
+                                    />
+
+                                ) : (
+
+                                    <div
+                                        className="ss-avatar"
+                                        style={{
+                                            background: "var(--ss-lime)",
+                                            color: "var(--ss-green-dark)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            fontWeight: 700,
+                                            fontSize: "13px"
+                                        }}
+                                    >
+                                        {initials || "U"}
+                                    </div>
+
+                                )}
+
+                                <div className="ss-nav-greeting-text">
+
+                                    <small>Hola</small>
+
+                                    <strong>
+                                        {userEmail.split("@")[0]}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                onClick={logout}
+                                className="ss-nav-icon-btn"
+                                title="Cerrar sesión"
+                            >
+
+                                <i className="fa-solid fa-right-from-bracket"></i>
+
+                            </button>
+
+                        </>
+
+                    )}
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    );
 };
