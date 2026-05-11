@@ -11,7 +11,7 @@ export const CreateProducts = () => {
     const navigate = useNavigate();
     const token = sessionStorage.getItem("token");
 
-    // 🔥 SUBIR IMAGEN A CLOUDINARY
+    
     const uploadImage = async (file) => {
         const formData = new FormData();
         formData.append("file", file);
@@ -28,7 +28,7 @@ export const CreateProducts = () => {
         return data.url;
     };
 
-    // 🔥 CREAR PRODUCTO
+    
     const handleSubmit = async () => {
         if (!nombre || !precio || !categoria_id) {
             alert("Faltan datos");
@@ -96,7 +96,7 @@ export const CreateProducts = () => {
                 onChange={(e) => setCategoria_id(e.target.value)}
             />
 
-            {/* 🔥 INPUT IMAGEN */}
+            
             <input
                 className="form-control mb-2"
                 type="file"
@@ -109,7 +109,7 @@ export const CreateProducts = () => {
                 }}
             />
 
-            {/* 👀 PREVIEW */}
+            
             {image && (
                 <div className="mb-2">
                     <img src={image} width="120" />

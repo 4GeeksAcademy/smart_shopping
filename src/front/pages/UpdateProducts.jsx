@@ -38,7 +38,7 @@ export const UpdateProducts = () => {
             });
     };
 
-    // 🔥 subir imagen
+    
     const uploadImage = async (file) => {
         const formData = new FormData();
         formData.append("file", file);
@@ -63,7 +63,7 @@ export const UpdateProducts = () => {
                 nombre,
                 precio,
                 categoria_id,
-                image_url: image // 🔥 IMPORTANTE
+                image_url: image 
             })
         })
             .then(res => res.json())
@@ -97,7 +97,7 @@ export const UpdateProducts = () => {
                 placeholder="Categoria ID"
             />
 
-            {/* 🔥 SUBIR IMAGEN */}
+            
             <input
                 type="file"
                 className="form-control mb-2"
@@ -107,7 +107,7 @@ export const UpdateProducts = () => {
                 }}
             />
 
-            {/* 👀 preview */}
+            
             {image && (
                 <img
                     src={image}

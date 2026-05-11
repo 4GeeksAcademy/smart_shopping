@@ -17,7 +17,7 @@ const Login = () => {
 
         try {
 
-            // 🔥 Detectar si es admin
+            
             const endpoint =
                 email.includes("admin")
                     ? "/api/admin/login"
@@ -45,11 +45,11 @@ const Login = () => {
                 return;
             }
 
-            // ✅ Guardar sesión
+            // Guardar sesión
             sessionStorage.setItem("token", data.token);
             sessionStorage.setItem("role", data.role);
 
-            // 🔥 Solo usuarios normales tienen esto
+            
             if (data.user_id) {
                 sessionStorage.setItem("user_id", data.user_id);
             }
@@ -57,7 +57,7 @@ const Login = () => {
             sessionStorage.setItem("email", data.email || email);
             sessionStorage.setItem("image_url", data.image_url || "");
 
-            // ✅ Redirección según rol
+            
             if (data.role === "admin") {
                 navigate("/products");
             } else {
@@ -89,7 +89,7 @@ const Login = () => {
                 }}
             >
 
-                {/* Header */}
+                
                 <div
                     style={{
                         textAlign: "center",
@@ -135,10 +135,10 @@ const Login = () => {
                     </p>
                 </div>
 
-                {/* FORM */}
+                
                 <form onSubmit={handleLogin}>
 
-                    {/* EMAIL */}
+                    
                     <div style={{ marginBottom: "16px" }}>
                         <label className="ss-label">
                             Email
@@ -155,7 +155,7 @@ const Login = () => {
                         />
                     </div>
 
-                    {/* PASSWORD */}
+                    
                     <div style={{ marginBottom: "20px" }}>
                         <label className="ss-label">
                             Contraseña
@@ -171,7 +171,7 @@ const Login = () => {
                         />
                     </div>
 
-                    {/* BOTÓN LOGIN */}
+                    
                     <button
                         type="submit"
                         className="ss-btn ss-btn-primary ss-btn-block ss-btn-lg"
@@ -190,7 +190,7 @@ const Login = () => {
                         )}
                     </button>
 
-                    {/* ERROR */}
+                    
                     {error && (
                         <div
                             style={{
@@ -212,7 +212,7 @@ const Login = () => {
 
                 </form>
 
-                {/* Divider */}
+                
                 <div
                     style={{
                         margin: "24px 0",
@@ -245,7 +245,7 @@ const Login = () => {
                     />
                 </div>
 
-                {/* REGISTER */}
+                
                 <button
                     type="button"
                     onClick={() => navigate("/register")}

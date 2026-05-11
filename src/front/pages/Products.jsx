@@ -69,7 +69,7 @@ export const Products = () => {
         <div className="ss-section-sm ss-fade-in">
             <div className="ss-container">
 
-                {/* Header */}
+                
                 <div
                     style={{
                         display: "flex",
@@ -105,7 +105,7 @@ export const Products = () => {
                     )}
                 </div>
 
-                {/* Loading */}
+                
                 {loading ? (
                     <div className="ss-empty">
                         <i
@@ -122,7 +122,7 @@ export const Products = () => {
                     </div>
                 ) : products.length === 0 ? (
 
-                    /* Empty */
+                    
                     <div className="ss-card ss-empty">
                         <div className="ss-empty-icon">
                             <i className="fa-solid fa-box-open"></i>
@@ -141,7 +141,7 @@ export const Products = () => {
 
                 ) : (
 
-                    /* Grid */
+                    
                     <div
                         style={{
                             display: "grid",
@@ -168,13 +168,13 @@ export const Products = () => {
     );
 };
 
-/* ===================================================== */
-/* 🛒 PRODUCT CARD */
-/* ===================================================== */
+
+/* PRODUCT CARD */
+
 
 const ProductCard = ({ product, isAdmin, onDelete, onEdit }) => {
 
-    // 📸 Imágenes locales
+    
     const productImages = {
         azucar: azucarImg,
         agua: aguaImg,
@@ -185,22 +185,22 @@ const ProductCard = ({ product, isAdmin, onDelete, onEdit }) => {
         levadura: levaduraImg,
         sal: salImg,
 
-        // ✅ NUEVAS IMÁGENES
+    
         oregano: oreganoImg,
         "aceite de oliva": aceiteOlivaImg,
     };
 
-    // ✅ Normalizar nombre para evitar problemas con tildes
+    
     const normalizedName = product.nombre
         ?.toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .trim();
 
-    // 🔎 Buscar imagen
+    // Buscar imagen
     const imageSrc = productImages[normalizedName];
 
-    // 🛒 Emoji fallback
+    
     const getEmoji = (name) => {
         const n = (name || "").toLowerCase();
 
@@ -237,7 +237,7 @@ const ProductCard = ({ product, isAdmin, onDelete, onEdit }) => {
     return (
         <div className="ss-product-card">
 
-            {/* Imagen */}
+            
             <div className="ss-product-img-wrap">
 
                 {imageSrc ? (
@@ -257,14 +257,14 @@ const ProductCard = ({ product, isAdmin, onDelete, onEdit }) => {
                     </span>
                 )}
 
-                {/* Badge */}
+                
                 {product.precio > 0 && (
                     <span className="ss-product-badge">
                         Nuevo
                     </span>
                 )}
 
-                {/* Admin actions */}
+                
                 {isAdmin && (
                     <div className="ss-product-actions">
 
@@ -288,7 +288,7 @@ const ProductCard = ({ product, isAdmin, onDelete, onEdit }) => {
                 )}
             </div>
 
-            {/* Body */}
+        
             <div className="ss-product-body">
 
                 <div className="ss-product-category">

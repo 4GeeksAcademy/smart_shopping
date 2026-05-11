@@ -13,9 +13,7 @@ export const ShoppingList = () => {
     const backend = import.meta.env.VITE_BACKEND_URL;
     const getToken = () => sessionStorage.getItem("token");
 
-    // ============================
-    // 📥 GET DATA
-    // ============================
+    
     const getLists = async () => {
         try {
             const res = await fetch(`${backend}/api/lists-with-items`, {
@@ -47,9 +45,7 @@ export const ShoppingList = () => {
         getProducts();
     }, []);
 
-    // ============================
-    // ➕ CREATE LIST
-    // ============================
+    
     const createList = async () => {
         if (!newListName.trim()) return;
         setCreating(true);
@@ -85,9 +81,7 @@ export const ShoppingList = () => {
         }
     };
 
-    // ============================
-    // ➕ ADD ITEM
-    // ============================
+    
     const addItem = async (listId) => {
         const producto_id = selectedProduct[listId];
         if (!producto_id) return;
@@ -137,9 +131,9 @@ export const ShoppingList = () => {
         }
     };
 
-    // ============================
-    // 🤖 IA
-    // ============================
+    
+    // IA
+    
     const generateFromRecipe = async (listId) => {
         const recetaTexto = recipe[listId];
         if (!recetaTexto || !recetaTexto.trim()) return;
@@ -197,9 +191,7 @@ export const ShoppingList = () => {
         }
     };
 
-    // ============================
-    // ✔️ TOGGLE / DELETE ITEM
-    // ============================
+    
     const toggleItem = async (itemId, currentStatus) => {
         try {
             await fetch(`${backend}/api/items/${itemId}`, {
@@ -228,9 +220,7 @@ export const ShoppingList = () => {
         }
     };
 
-    // ============================
-    // 🎨 RENDER
-    // ============================
+    
     return (
         <div className="ss-container ss-fade-in">
 
@@ -244,7 +234,7 @@ export const ShoppingList = () => {
                 </p>
             </div>
 
-            {/* CREAR LISTA */}
+            
             <div className="ss-card" style={{ marginBottom: "32px", padding: "20px" }}>
                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                     <input
@@ -267,7 +257,7 @@ export const ShoppingList = () => {
                 </div>
             </div>
 
-            {/* LISTAS */}
+            
             {lists.length === 0 ? (
                 <div className="ss-card ss-empty">
                     <div className="ss-empty-icon">
@@ -287,7 +277,7 @@ export const ShoppingList = () => {
                         return (
                             <div key={list.id} className="ss-fade-in">
 
-                                {/* CARD HERO OSCURA POR LISTA */}
+                                
                                 <div className="ss-card-dark" style={{ marginBottom: "16px" }}>
                                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px", flexWrap: "wrap" }}>
                                         <div style={{ flex: 1, minWidth: "200px" }}>
@@ -312,7 +302,7 @@ export const ShoppingList = () => {
                                         </button>
                                     </div>
 
-                                    {/* BARRA DE PROGRESO */}
+                                
                                     {totalItems > 0 && (
                                         <div style={{
                                             marginTop: "16px",
@@ -332,7 +322,7 @@ export const ShoppingList = () => {
                                     )}
                                 </div>
 
-                                {/* MÓDULO IA — DESTACADO */}
+                                
                                 <div style={{
                                     background: "linear-gradient(180deg, var(--ss-green-pale) 0%, white 100%)",
                                     border: "1px solid var(--ss-lime)",
@@ -395,7 +385,7 @@ export const ShoppingList = () => {
                                     </div>
                                 </div>
 
-                                {/* ITEMS */}
+                                
                                 <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
                                     {list.items.length === 0 ? (
                                         <div style={{
@@ -421,7 +411,7 @@ export const ShoppingList = () => {
                                     )}
                                 </div>
 
-                                {/* AÑADIR PRODUCTO EXISTENTE */}
+                                
                                 <div style={{
                                     background: "white",
                                     border: "1px solid var(--ss-border)",
@@ -509,7 +499,7 @@ export const ShoppingList = () => {
     );
 };
 
-// 🛒 ITEM ROW (componente interno limpio)
+
 const ItemRow = ({ item, onToggle, onDelete }) => {
     return (
         <div
@@ -524,7 +514,7 @@ const ItemRow = ({ item, onToggle, onDelete }) => {
                 transition: "var(--ss-transition)"
             }}
         >
-            {/* Checkbox custom */}
+            
             <div
                 onClick={onToggle}
                 style={{
@@ -546,7 +536,7 @@ const ItemRow = ({ item, onToggle, onDelete }) => {
                 )}
             </div>
 
-            {/* Texto */}
+            
             <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                     style={{
@@ -567,7 +557,7 @@ const ItemRow = ({ item, onToggle, onDelete }) => {
                 </div>
             </div>
 
-            {/* Eliminar */}
+            
             <button
                 onClick={onDelete}
                 className="ss-btn ss-btn-icon ss-btn-danger"

@@ -7,7 +7,7 @@ export const Admins = () => {
 
     const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-    // Obtener admins
+    
     const getAdmins = async () => {
         try {
             const response = await fetch(`${BASE_URL}/api/admins`, {
@@ -40,7 +40,7 @@ export const Admins = () => {
         getAdmins();
     }, []);
 
-    //  eliminar admin 
+    
     const deleteAdmin = async (id) => {
         try {
             const response = await fetch(`${BASE_URL}/api/admins/${id}`, {

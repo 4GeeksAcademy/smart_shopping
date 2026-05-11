@@ -34,7 +34,7 @@ export const UpdateShoppingList = () => {
         }
     };
 
-    // ACTUALIZAR LISTA
+    
     const handleUpdate = async () => {
         try {
             const token = sessionStorage.getItem("token");

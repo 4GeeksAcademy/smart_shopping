@@ -36,7 +36,7 @@ export const Navbar = () => {
 
         e.preventDefault();
 
-        // 🔥 SOLO ADMIN PUEDE BUSCAR PRODUCTOS
+        
         if (role === "admin") {
 
             navigate("/products");
@@ -50,7 +50,7 @@ export const Navbar = () => {
 
             <div className="ss-navbar-inner">
 
-                {/* 🛒 BRAND */}
+                
                 <Link to="/" className="ss-brand">
 
                     <span className="ss-brand-icon">
@@ -61,7 +61,7 @@ export const Navbar = () => {
 
                 </Link>
 
-                {/* 🔗 LINKS */}
+                
                 <div
                     style={{
                         display: "flex",
@@ -77,7 +77,7 @@ export const Navbar = () => {
                         Home
                     </Link>
 
-                    {/* 👤 USER */}
+                    
                     {token && role === "user" && (
 
                         <Link
@@ -89,7 +89,7 @@ export const Navbar = () => {
 
                     )}
 
-                    {/* 👑 ADMIN */}
+                    
                     {token && role === "admin" && (
 
                         <>
@@ -126,7 +126,7 @@ export const Navbar = () => {
 
                 </div>
 
-                {/* 🔍 BUSCADOR SOLO ADMIN */}
+                
                 {role === "admin" && (
 
                     <form
@@ -160,10 +160,10 @@ export const Navbar = () => {
 
                 )}
 
-                {/* 👤 DERECHA */}
+                
                 <div className="ss-nav-actions">
 
-                    {/* NO LOGUEADO */}
+                    
                     {!token && (
 
                         <>
@@ -188,7 +188,7 @@ export const Navbar = () => {
 
                     )}
 
-                    {/* LOGUEADO */}
+                    
                     {token && (
 
                         <>

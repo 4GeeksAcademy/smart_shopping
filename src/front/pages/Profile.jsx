@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// 🧭 SIDEBAR ITEMS — adaptados a tu app
+
 const SECTIONS = [
     { id: "profile", label: "Perfil", icon: "fa-user" },
     { id: "info", label: "Información", icon: "fa-circle-info" },
@@ -26,7 +26,7 @@ export const Profile = () => {
         <div className="ss-section-sm ss-fade-in">
             <div className="ss-container">
 
-                {/* Header pequeño */}
+                
                 <div style={{ marginBottom: "32px" }}>
                     <span className="ss-eyebrow">Tu cuenta</span>
                     <h1 style={{ fontSize: "32px", margin: 0, fontWeight: 800 }}>
@@ -34,7 +34,7 @@ export const Profile = () => {
                     </h1>
                 </div>
 
-                {/* Layout: sidebar + contenido */}
+                
                 <div style={{
                     display: "grid",
                     gridTemplateColumns: "260px 1fr",
@@ -42,7 +42,7 @@ export const Profile = () => {
                     alignItems: "flex-start"
                 }} className="ss-account-layout">
 
-                    {/* ===== SIDEBAR ===== */}
+                    
                     <aside className="ss-account-sidebar">
                         <nav>
                             {SECTIONS.map(section => (
@@ -56,14 +56,14 @@ export const Profile = () => {
                                 </button>
                             ))}
 
-                            {/* Separador */}
+                            
                             <div style={{
                                 height: "1px",
                                 background: "var(--ss-border)",
                                 margin: "12px 16px"
                             }} />
 
-                            {/* Logout */}
+                            
                             <button
                                 className="ss-sidebar-item"
                                 onClick={logout}
@@ -75,7 +75,7 @@ export const Profile = () => {
                         </nav>
                     </aside>
 
-                    {/* ===== CONTENIDO ===== */}
+                    
                     <main>
                         {activeSection === "profile" && <ProfileSection role={role} email={email} />}
                         {activeSection === "info" && <InfoSection email={email} />}
@@ -86,7 +86,7 @@ export const Profile = () => {
                 </div>
             </div>
 
-            {/* CSS embebido (estilos específicos del sidebar) */}
+            
             <style>{`
                 .ss-account-sidebar {
                     background: white;
@@ -159,9 +159,6 @@ export const Profile = () => {
     );
 };
 
-// ============================
-// 👤 SECCIÓN: PERFIL (welcome card + stats)
-// ============================
 const ProfileSection = ({ role, email }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -250,7 +247,7 @@ const ProfileSection = ({ role, email }) => {
                     gap: "20px",
                     flexWrap: "wrap"
                 }}>
-                    {/* Avatar con uploader */}
+                    
                     <div style={{ position: "relative", flexShrink: 0 }}>
                         {displayImage ? (
                             <img
@@ -310,7 +307,7 @@ const ProfileSection = ({ role, email }) => {
                         </label>
                     </div>
 
-                    {/* Texto bienvenida */}
+                    
                     <div style={{ flex: 1, minWidth: "200px" }}>
                         <h2 style={{ fontSize: "24px", margin: "0 0 4px", fontWeight: 800 }}>
                             Bienvenido,{" "}
@@ -329,7 +326,7 @@ const ProfileSection = ({ role, email }) => {
                         </p>
                     </div>
 
-                    {/* Botón guardar foto si hay nueva */}
+                    
                     {file && (
                         <button
                             onClick={handleUpload}
@@ -352,7 +349,7 @@ const ProfileSection = ({ role, email }) => {
                 </div>
             </div>
 
-            {/* STATS GRID (solo si es user) */}
+            
             {role !== "admin" && (
                 <div style={{
                     display: "grid",
@@ -390,7 +387,7 @@ const ProfileSection = ({ role, email }) => {
                 </div>
             )}
 
-            {/* Si es admin, mostrar accesos rápidos */}
+            
             {role === "admin" && (
                 <div style={{
                     display: "grid",
@@ -431,7 +428,7 @@ const ProfileSection = ({ role, email }) => {
     );
 };
 
-// 📊 STAT CARD
+
 const StatCard = ({ icon, bg, color, value, label }) => (
     <div className="ss-card" style={{ padding: "20px" }}>
         <div style={{
@@ -457,7 +454,7 @@ const StatCard = ({ icon, bg, color, value, label }) => (
     </div>
 );
 
-// 🚀 QUICK ACCESS CARD (para admin)
+
 const QuickAccessCard = ({ href, icon, bg, title, desc }) => {
     const navigate = useNavigate();
     return (
@@ -490,9 +487,7 @@ const QuickAccessCard = ({ href, icon, bg, title, desc }) => {
     );
 };
 
-// ============================
-// ℹ️ SECCIÓN: INFORMACIÓN
-// ============================
+
 const InfoSection = ({ email }) => {
     return (
         <div className="ss-card" style={{ padding: "32px" }}>
@@ -571,7 +566,7 @@ const InfoSection = ({ email }) => {
     );
 };
 
-// Estilos compartidos para "inputs de display"
+
 const inputDisplayStyle = {
     padding: "12px 16px",
     border: "1px solid var(--ss-border)",
@@ -590,9 +585,7 @@ const iconStyle = {
     width: "14px"
 };
 
-// ============================
-// 📋 SECCIÓN: MIS LISTAS
-// ============================
+
 const ListsSection = ({ navigate, role }) => {
     if (role === "admin") {
         return (
@@ -642,9 +635,7 @@ const ListsSection = ({ navigate, role }) => {
     );
 };
 
-// ============================
-// 🔔 SECCIÓN: NOTIFICACIONES
-// ============================
+
 const NotificationsSection = () => (
     <div className="ss-card" style={{ padding: "32px" }}>
         <h2 style={{ fontSize: "20px", margin: "0 0 8px", fontWeight: 700 }}>
@@ -664,9 +655,7 @@ const NotificationsSection = () => (
     </div>
 );
 
-// ============================
-// 🔒 SECCIÓN: CONTRASEÑA
-// ============================
+
 const PasswordSection = () => {
     return (
         <div className="ss-card" style={{ padding: "32px" }}>

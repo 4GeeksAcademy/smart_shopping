@@ -40,19 +40,19 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
 
-      {/* 🏠 HOME */}
+      
       <Route index element={<Home />} />
       <Route path="single/:theId" element={<Single />} />
       <Route path="demo" element={<Demo />} />
 
-      {/* 🔐 AUTH */}
+      
       <Route path="login" element={<Login />} />
       <Route path="admin-login" element={<AdminLogin />} />
 
-      {/* 🆕 REGISTER */}
+      
       <Route path="register" element={<CreateUser />} />
 
-      {/* 👤 USERS (ADMIN ONLY) */}
+      
       <Route
         path="users"
         element={
@@ -80,7 +80,7 @@ export const router = createBrowserRouter(
         }
       />
 
-      {/* 🗂 CATEGORIES (ADMIN ONLY) */}
+      
       <Route
         path="categories"
         element={
@@ -108,7 +108,7 @@ export const router = createBrowserRouter(
         }
       />
 
-      {/* 📦 PRODUCTS (ADMIN ONLY) */}
+      
       <Route
         path="products"
         element={
@@ -136,7 +136,7 @@ export const router = createBrowserRouter(
         }
       />
 
-      {/* 🛒 SHOPPING LIST (USER ONLY) */}
+      
       <Route
         path="lists"
         element={
@@ -164,7 +164,7 @@ export const router = createBrowserRouter(
         }
       />
 
-      {/* 👑 ADMINS (ADMIN ONLY) */}
+      
       <Route
         path="admins"
         element={
@@ -192,7 +192,7 @@ export const router = createBrowserRouter(
         }
       />
 
-      {/* 👤 PROFILE (USER ONLY) */}
+      
       <Route
         path="profile"
         element={

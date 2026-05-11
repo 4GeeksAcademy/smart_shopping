@@ -4,9 +4,9 @@ import cloudinary.uploader
 import os
 
 
-# ============================
+
 # 🔐 CONFIG CLOUDINARY
-# ============================
+
 cloudinary.config(
     cloud_name=os.getenv("CLOUD_NAME"),
     api_key=os.getenv("API_KEY"),
@@ -14,9 +14,9 @@ cloudinary.config(
 )
 
 
-# ============================
+
 # ⚠️ MANEJO DE ERRORES
-# ============================
+
 class APIException(Exception):
     status_code = 400
 
@@ -33,9 +33,9 @@ class APIException(Exception):
         return rv
 
 
-# ============================
+
 # 🔎 UTILIDADES
-# ============================
+
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
     arguments = rule.arguments if rule.arguments is not None else ()

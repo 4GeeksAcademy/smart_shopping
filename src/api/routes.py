@@ -7,18 +7,18 @@ import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
-# ============================
+
 # 🔐 HELPERS
-# ============================
+
 
 
 def is_admin():
     return get_jwt_identity() == "admin"
 
 
-# ============================
+
 # 🔐 AUTH
-# ============================
+
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -57,9 +57,9 @@ def admin_login():
     })
 
 
-# ============================
+
 # 👤 USERS
-# ============================
+
 
 @api.route('/users', methods=['GET'])
 @jwt_required()
@@ -121,9 +121,9 @@ def delete_user(id):
     return jsonify({"msg": "Usuario eliminado"})
 
 
-# ============================
+
 # 👑 ADMINS
-# ============================
+
 
 @api.route('/admins', methods=['GET'])
 @jwt_required()
@@ -193,9 +193,9 @@ def delete_admin(id):
     return jsonify({"msg": "Admin eliminado"})
 
 
-# ============================
+
 # 🗂 CATEGORIES
-# ============================
+
 
 @api.route('/categories', methods=['GET'])
 def get_categories():
@@ -241,9 +241,9 @@ def delete_category(id):
     return jsonify({"msg": "Categoría eliminada"})
 
 
-# ============================
+
 # 📦 PRODUCTS
-# ============================
+
 
 @api.route('/products', methods=['GET'])
 @jwt_required()
@@ -300,9 +300,9 @@ def delete_product(id):
     return jsonify({"msg": "Producto eliminado"})
 
 
-# ============================
+
 # 🛒 LISTS
-# ============================
+
 
 @api.route('/lists', methods=['GET'])
 @jwt_required()
@@ -369,9 +369,9 @@ def delete_list(id):
     return jsonify({"msg": "Lista eliminada"})
 
 
-# ============================
+
 # 🧾 ITEMS (🔒 SEGURO)
-# ============================
+
 
 @api.route('/items/<int:id>', methods=['GET'])
 @jwt_required()
@@ -463,9 +463,9 @@ def delete_item(id):
     return jsonify({"msg": "Item eliminado"})
 
 
-# ============================
+
 # 🔗 LISTS WITH ITEMS
-# ============================
+
 
 @api.route('/lists-with-items', methods=['GET'])
 @jwt_required()
@@ -498,9 +498,9 @@ def get_lists_with_items():
     return jsonify(result)
 
 
-# ============================
+
 # ☁️ CLOUDINARY
-# ============================
+
 
 @api.route('/upload', methods=['POST'])
 def upload_file():
@@ -516,9 +516,9 @@ def upload_file():
     })
 
 
-# ============================
+
 # 👤 PROFILE
-# ============================
+
 
 @api.route('/profile/image', methods=['PUT'])
 @jwt_required()
@@ -552,9 +552,9 @@ def update_admin_image():
 
     return jsonify(admin.serialize())
 
-# ============================
+
 # 🤖 IA RECETAS (GEMINI)
-# ============================
+
 
 
 @api.route('/ai/recipe', methods=['POST'])

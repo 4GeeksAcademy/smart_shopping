@@ -6,7 +6,7 @@ export const Home = () => {
 	const role = sessionStorage.getItem("role");
 	const [categories, setCategories] = useState([]);
 	const backend = import.meta.env.VITE_BACKEND_URL;
-	// Categorías visuales (con iconos emoji + colores pastel propios)
+	
 	const categoryVisuals = [
 		{ name: "Frutas", emoji: "🍓", bg: "var(--ss-pastel-green)", count: 12 },
 		{ name: "Verduras", emoji: "🥦", bg: "var(--ss-pastel-mint)", count: 18 },
@@ -15,7 +15,7 @@ export const Home = () => {
 		{ name: "Bebidas", emoji: "🥤", bg: "var(--ss-pastel-lime)", count: 14 },
 	];
 	useEffect(() => {
-		// Intentar cargar categorías reales (no bloquea si falla)
+		
 		fetch(`${backend}/api/categories`)
 			.then(r => r.ok ? r.json() : [])
 			.then(data => Array.isArray(data) && setCategories(data))
@@ -23,7 +23,7 @@ export const Home = () => {
 	}, []);
 	return (
 		<div className="ss-fade-in">
-			{/* ===== HERO ===== */}
+			
 			<div className="ss-section-sm">
 				<div className="ss-container">
 					<div className="ss-hero">
@@ -71,7 +71,7 @@ export const Home = () => {
 								)}
 							</div>
 						</div>
-						{/* Ilustración derecha (cesta de productos con emojis) */}
+						
 						<div className="ss-hero-illustration" style={{ position: "relative" }}>
 							<div style={{
 								background: "white",
@@ -90,7 +90,7 @@ export const Home = () => {
 								<span style={{ position: "absolute", top: "5%", right: "20%", fontSize: "38px" }}>🥬</span>
 								<span style={{ position: "absolute", bottom: "8%", left: "8%", fontSize: "40px" }}>🥕</span>
 								<span style={{ position: "absolute", bottom: "12%", right: "10%", fontSize: "42px" }}>🍋</span>
-								{/* Badge de oferta */}
+								
 								<div style={{
 									position: "absolute",
 									top: "30%",
@@ -116,7 +116,7 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
-			{/* ===== SHOP BY CATEGORY ===== */}
+			
 			<div className="ss-section">
 				<div className="ss-container">
 					<div className="ss-section-header">
@@ -143,7 +143,7 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
-			{/* ===== FEATURES (3 cards) ===== */}
+			
 			<div className="ss-section" style={{ paddingTop: 0 }}>
 				<div className="ss-container">
 					<div className="ss-section-header">
@@ -180,7 +180,7 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
-			{/* ===== CTA BANNER (estilo "Get the app") ===== */}
+			
 			<div className="ss-footer-cta">
 				<div className="ss-container">
 					<div className="ss-footer-cta-inner">
@@ -214,7 +214,7 @@ export const Home = () => {
 								</a>
 							</div>
 						</div>
-						{/* Imagen mockup decorativa */}
+						
 						<div style={{ textAlign: "center", position: "relative" }}>
 							<div style={{
 								background: "white",
@@ -265,7 +265,7 @@ export const Home = () => {
 						</div>
 					</div>
 				</div>
-				{/* Decoración de fondo */}
+				
 				<div style={{
 					position: "absolute",
 					bottom: "-60px",
